@@ -2,7 +2,7 @@
 
 ## Directory Structure
 
-![directory structure](atf/dst.c.png)
+![directory structure](.atf/dst.c.png)
 
 ## The Workflow
 
