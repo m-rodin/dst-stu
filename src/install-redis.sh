@@ -8,16 +8,16 @@ f="$n.tar.gz"
 
 cd ~
 
-# curl -L -O "http://download.redis.io/releases/$f"
-# tar -xf "$f"
-# unlink "./$f"
+curl -L -O "http://download.redis.io/releases/$f"
+tar -xf "$f"
+unlink "./$f"
 
 cd "$n"
 
-# make && \
+make && \
 make test && sudo make install
 
-# cd "$cDir"
+cd "$cDir"
 
 
 
