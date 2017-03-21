@@ -114,8 +114,40 @@ function installJq {
 
 }
 
+function installJava {
+
+	echo 'Installing Java'
+	v='8u121'
+	
+	cd ~
+	wget --no-cookies --no-check-certificate \
+	--header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
+	"http://download.oracle.com/otn-pub/java/jdk/$v-b13/e9e7ea248e2c4826b92b3f075a80e441/jre-$v-linux-x64.rpm"
+	
+	sudo yum localinstall "jre-$v-linux-x64.rpm"
+	rm "$HOME/jre-$v-linux-x64.rpm"
+	
+	sudo alternatives --config java
+	# 
+	
+}
+
+function updatePython2 {
+
+	sudo yum update
+	sudo yum install scl-utils
+	sudo yum install centos-release-scl-rh
+	sudo yum install python27
+	sudo scl enable python27 bash
+	export PYTHONPATH="/usr/lib/python2.7/site-packages/":$PYTHONPATH
+
+}
+
 # setRepos
 # installGit
 # installJq
+# installJava
+updatePython2
+
 
 
