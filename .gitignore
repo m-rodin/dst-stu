@@ -4,6 +4,7 @@ syntax: glob
 
 # common
 
+.DS_store
 .directory
 .dld
 .idea
