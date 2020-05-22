@@ -1,0 +1,40 @@
+CREATE CLASS Student IF NOT EXISTS EXTENDS V
+CREATE PROPERTY Student.name IF NOT EXISTS STRING
+
+
+CREATE CLASS MasterProgram IF NOT EXISTS EXTENDS V
+CREATE PROPERTY MasterProgram.name IF NOT EXISTS STRING
+
+
+CREATE CLASS Course IF NOT EXISTS EXTENDS V ABSTRACT
+CREATE PROPERTY Course.name IF NOT EXISTS STRING
+CREATE PROPERTY Course.credits IF NOT EXISTS INT
+
+CREATE CLASS MandatoryCourse IF NOT EXISTS EXTENDS Course
+CREATE CLASS OptionalCourse IF NOT EXISTS EXTENDS Course
+
+
+CREATE CLASS enrolled IF NOT EXISTS EXTENDS E
+CREATE CLASS in IF NOT EXISTS EXTENDS E
+
+
+CREATE VERTEX MasterProgram SET name='BDA&AI'
+
+CREATE VERTEX OptionalCourse SET name = 'Software Tech'
+CREATE VERTEX OptionalCourse SET name = 'NLP in AI'
+CREATE VERTEX MandatoryCourse SET name = 'Storage Tech'
+CREATE VERTEX MandatoryCourse SET name = 'Project Mangement'
+
+CREATE EDGE in FROM (SELECT FROM Course) TO (SELECT FROM MasterProgram WHERE name = 'BDA&AI')
+
+INSERT INTO Student(name) VALUES ('Nikita	Nikolaev'), ('Kaivalya 	Pandey'), ('Daria	Pirozhkova'), 
+          ('MIkhail	Rodin'), ('Kalmutskiy	Kirill'), ('Raphael	Blankson'),  ('Andrey	Yashkin'),
+          ('MIkhail	Liz'), ('Alexey	Korolev')
+
+CREATE EDGE enrolled FROM (SELECT FROM Student) TO (SELECT FROM MandatoryCourse)
+
+CREATE EDGE enrolled FROM (SELECT FROM Student WHERE name in ['Nikita       Nikolaev', 'Kaivalya  Pandey', 'Daria       Pirozhkova'])
+   TO (SELECT FROM OptionalCourse WHERE name = 'NLP in AI')
+
+CREATE EDGE enrolled FROM (SELECT FROM Student WHERE name in ['Raphael     Blankson', 'Kaivalya  Pandey', 'Andrey   Yashkin'])
+   TO (SELECT FROM OptionalCourse WHERE name = 'Software Tech')
