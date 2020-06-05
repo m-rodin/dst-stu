@@ -1,3 +1,6 @@
+# docker pull cloudera/quickstart:latest
+# docker run --hostname=quickstart.cloudera --privileged=true -t -i -p 8888 -v /home/rodin/dst-stu/:/root/dst-stu/ cloudera/quickstart:latest /usr/bin/docker-quickstart
+
 hadoop fs -mkdir /user/root/data
 hadoop fs -copyFromLocal /root/dst-stu/d/mr/tf-idf/ /user/root/data
 
