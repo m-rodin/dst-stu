@@ -30,7 +30,6 @@ pids
 *.tar
 *.zip
 
-*.log
 !d/l1.log
 *.pid
 *.seed

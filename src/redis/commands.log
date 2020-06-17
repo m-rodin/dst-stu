@@ -1,0 +1,121 @@
+# redis commands
+
+127.0.0.1:6379> SET user misha
+OK
+127.0.0.1:6379> GET user
+"misha"
+127.0.0.1:6379> MSET user misha user2 yulya
+OK
+127.0.0.1:6379> MGET user user2
+1) "misha"
+2) "yulya"
+127.0.0.1:6379> SET counter 1
+OK
+127.0.0.1:6379> INCR counter
+(integer) 2
+127.0.0.1:6379> GET counter
+"2"
+
+# HASH
+
+127.0.0.1:6379> HMSET settings theme "dark" limit 10 production 1
+OK
+127.0.0.1:6379> HGET settings theme
+"dark"
+127.0.0.1:6379> HKEYS settings
+1) "theme"
+2) "limit"
+3) "production"
+127.0.0.1:6379> HVALS settings
+1) "dark"
+2) "10"
+3) "1"
+127.0.0.1:6379> HLEN settings
+(integer) 3
+
+# LIST
+
+127.0.0.1:6379> RPUSH user:keywords user password group
+(integer) 3
+127.0.0.1:6379> LLEN user:keywords
+(integer) 3
+127.0.0.1:6379> LRANGE user:keywords 0 -1
+1) "user"
+2) "password"
+3) "group"
+127.0.0.1:6379> LRANGE user:keywords 0 1
+1) "user"
+2) "password"
+127.0.0.1:6379> LRANGE user:keywords 0 0
+1) "user"
+127.0.0.1:6379> LREM user:keywords 0 group
+(integer) 1
+127.0.0.1:6379> LPOP user:keywords
+"user"
+127.0.0.1:6379> LLEN user:keywords
+(integer) 1
+
+# SET
+
+127.0.0.1:6379> SADD food egg beef pork apple watermelon
+(integer) 5
+127.0.0.1:6379> SADD fruits orange apple banana
+(integer) 3
+127.0.0.1:6379> SMEMBERS fruits
+1) "apple"
+2) "orange"
+3) "banana"
+127.0.0.1:6379> SINTER food fruits
+1) "apple"
+127.0.0.1:6379> SDIFF food fruits
+1) "pork"
+2) "watermelon"
+3) "beef"
+4) "egg"
+127.0.0.1:6379> SUNION food fruits
+1) "beef"
+2) "watermelon"
+3) "orange"
+4) "egg"
+5) "apple"
+6) "pork"
+7) "banana"
+127.0.0.1:6379> SUNIONSTORE diff food fruits
+(integer) 7
+127.0.0.1:6379> SMEMBERS diff
+1) "beef"
+2) "watermelon"
+3) "orange"
+4) "egg"
+5) "apple"
+6) "pork"
+7) "banana"
+
+# EXPIRATION
+
+127.0.0.1:6379> SET temp_key 100500 EX 10
+OK
+127.0.0.1:6379> TTL temp_key
+(integer) 8
+127.0.0.1:6379> EXISTS temp_key
+(integer) 1
+127.0.0.1:6379> GET temp_key
+"100500"
+127.0.0.1:6379> EXISTS temp_key
+(integer) 0
+
+# NAMESPACES
+
+127.0.0.1:6379[2]> SELECT 1
+OK
+127.0.0.1:6379[1]> SET user misha
+OK
+127.0.0.1:6379[1]> MOVE user 2
+(integer) 1
+127.0.0.1:6379[1]> GET user
+(nil)
+127.0.0.1:6379[1]> SELECT 2
+OK
+127.0.0.1:6379[2]> GET user
+"misha"
+
